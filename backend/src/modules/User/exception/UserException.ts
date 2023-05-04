@@ -5,10 +5,3 @@ export class UserNotFoundException extends Error {
         this.name = 'UserNotFoundException';
     }
 }
-
-export class DatabaseException extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = 'DatabaseException';
-    }
-}

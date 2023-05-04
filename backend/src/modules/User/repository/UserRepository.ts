@@ -1,13 +1,13 @@
 import {User} from '../index';
 import db from '../../../database';
-import {DatabaseException} from "../../Exception";
+import {DatabaseException} from "../../Exception/DatabaseException";
 
 export class UserRepository {
     public async findById(userId: string): Promise<User | null> {
 
         try {
-            const user = await db.query('SELECT * FROM Users WHERE id = ?', [userId]);
-            return user[0] || null;
+            const row = await db.query('SELECT * FROM Users WHERE id = ?', [userId]);
+            return row[0] || null;
         }
 
         catch (error) {

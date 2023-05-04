@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { UserController, UserRepository, UserService } from '../index';
-import {DatabaseException, UserNotFoundException} from "../../Exception";
+
 
 
 export class UserRoute {

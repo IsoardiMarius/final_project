@@ -1,5 +1,4 @@
-import {User, UserService} from '../index';
-import {UserNotFoundException} from "../../Exception";
+import {User, UserService, UserNotFoundException} from '../index';
 
 export class UserController {
     private readonly userService: UserService;
@@ -11,10 +10,12 @@ export class UserController {
 
     async getUserById(userId: string): Promise<User> {
         const user = await this.userService.getUserById(userId);
+
         if (!user) {
             console.error(`User with ID ${userId} not found`)
             throw new UserNotFoundException(userId);
         }
-        return user;
+
+        else return user;
     }
 }

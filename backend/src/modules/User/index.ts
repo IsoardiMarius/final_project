@@ -4,5 +4,5 @@ export * from './services/UserService';
 export * from './repository/UserRepository';
 export * from './routes/UserRoutes';
 export * from '../../database';
-export * from '../Exception';
+export * from './exception/UserException';
 
