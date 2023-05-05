@@ -23,6 +23,7 @@ describe('GET /users/:id', () => {
     const axios = require('axios');
 
     it('should return user', async () => {
+
         const user = {
             id: 1,
             firstname: "marius",
@@ -30,6 +31,8 @@ describe('GET /users/:id', () => {
             email: "marisu@mail.com",
             password: "marius"
         }
+
+
 
         const response = await axios.get('https://localhost:3000/users/1');
 

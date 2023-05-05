@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'test') require('dotenv').config({ path: process.cw
 
 
 // Define the database connection configuration
-export class Config {
+export class DatabaseConfig {
     host: string;
     user: string;
     database: string;
@@ -30,7 +30,7 @@ export interface IDatabaseConnection {
 export class DatabaseConnection implements IDatabaseConnection {
     private connection: any;
 
-    constructor(private config: Config) {}
+    constructor(private config: DatabaseConfig) {}
     public connect(): void {
         this.connection = mysql.createConnection(this.config);
         this.connection.connect((err) => {
@@ -61,7 +61,7 @@ export class DatabaseConnection implements IDatabaseConnection {
 }
 
 // Create a new database connection
-const db = new DatabaseConnection(new Config(
+const db = new DatabaseConnection(new DatabaseConfig(
     // si NODE_ENV est à 'test', on utilise la base de données de test
     process.env.DB_HOST,
     process.env.DB_USER,
