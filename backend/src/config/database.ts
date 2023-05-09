@@ -3,10 +3,8 @@ const mysql = require('mysql2');
 if (process.env.NODE_ENV === 'development') require('dotenv').config({ path: process.cwd() + '/.env' });
 if (process.env.NODE_ENV === 'test') require('dotenv').config({ path: process.cwd() + '/.env.test' });
 
-
-
 // Define the database connection configuration
-export class DatabaseConfig {
+class DatabaseConfig {
     host: string;
     user: string;
     database: string;
@@ -19,18 +17,10 @@ export class DatabaseConfig {
     }
 }
 
-// Define the database connection interface
-export interface IDatabaseConnection {
-    connect(): void;
-    query(sql: string, values?: any): Promise<any>;
-    close(): void;
-}
+class DatabaseConnection {
+    private connection;
 
-// Define the concrete implementation of the database connection
-export class DatabaseConnection implements IDatabaseConnection {
-    private connection: any;
-
-    constructor(private config: DatabaseConfig) {}
+    constructor(private config: DatabaseConfig) { }
     public connect(): void {
         this.connection = mysql.createConnection(this.config);
         this.connection.connect((err) => {
@@ -57,16 +47,12 @@ export class DatabaseConnection implements IDatabaseConnection {
     public close(): void {
         this.connection.end();
     }
-
 }
 
 // Create a new database connection
-const db = new DatabaseConnection(new DatabaseConfig(
+export const database = new DatabaseConnection(new DatabaseConfig(
     // si NODE_ENV est à 'test', on utilise la base de données de test
     process.env.DB_HOST,
     process.env.DB_USER,
     process.env.DB_DATABASE,
 ));
-
-export {};
-export default db;

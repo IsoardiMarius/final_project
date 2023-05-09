@@ -3,6 +3,6 @@ export * from './controllers/UserController';
 export * from './services/UserService';
 export * from './repository/UserRepository';
 export * from './routes/UserRoutes';
-export * from '../../database';
+export * from '../../config/database';
 export * from './exception/UserException';
 

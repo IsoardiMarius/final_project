@@ -4,9 +4,10 @@ import * as fs from "fs";
 import {app} from "./app";
 
 export class HttpsServer {
+
     private app: Application;
     private readonly port: number;
-    private server: https.Server | null;
+    private server: https.Server | null
 
     constructor(app: Application, port: number) {
         this.app = app;
@@ -44,6 +45,6 @@ export class HttpsServer {
         });
     }
 }
-export const server = new HttpsServer(app, 3000);
+const server = new HttpsServer(app, 3000);
 // comment this line to run the tests
-// server.start();
+server.start();

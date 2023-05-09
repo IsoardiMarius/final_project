@@ -1,7 +1,7 @@
 import { app } from '../src/app';
 import { HttpsServer } from '../src/server';
-import db from "../src/database";
-import {User} from "../src/modules/User";
+import { database } from "../src/config/database";
+import { User } from "../src/modules/User";
 let server: HttpsServer;
 
 
@@ -15,7 +15,7 @@ beforeAll( () => {
 });
 
 afterAll(async () => {
-    db.close();
+    database.close();
     await server.stop();
 });
 

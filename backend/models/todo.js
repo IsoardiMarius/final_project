@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Author extends Model {
+  class todo extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,20 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-
-
-  Author.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING
+  todo.init({
+    owner_id: DataTypes.INTEGER,
+    title: DataTypes.STRING,
+    completed: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Author',
+    modelName: 'todo',
   });
-
-  Author.associate = (models) => {
-    Author.hasMany(models.Post)
-  }
-
-
-  return Author;
+  return todo;
 };
