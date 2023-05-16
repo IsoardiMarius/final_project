@@ -1,9 +1,9 @@
 require('dotenv').config();
 import { Application, Request, Response, NextFunction } from 'express';
-import * as express from 'express';
+import express from "express";
 import cookieParser = require("cookie-parser");
 import bodyParser = require("body-parser");
-import cors = require("cors");
+import cors from "cors";
 const session = require('express-session');
 const passport = require('passport');
 
@@ -12,7 +12,6 @@ import { database } from "./config-storage/database/database";
 import { redisInstance } from "./config-storage/redis/RedisInstance";
 
 import { UserRoute } from "./modules/front-office/client";
-import * as process from "process";
 
 class App {
     public app: Application;
@@ -26,6 +25,7 @@ class App {
 
     constructor() {
         this.app = express();
+        //TODO: renommer les fonctions pour plus de clarté
         this.config();
         this.session();
         this.routes();
@@ -68,6 +68,7 @@ class App {
     }
 
 
+    //TODO: clean les routes
     private routes(): void {
             this.app.use('/users', new UserRoute().router);
             this.app.use('/signin',   passport.authenticate('local'), (req: any, res: Response) => {
@@ -90,6 +91,7 @@ class App {
         });
         }
 
+        //TODO: lever le databaseConnect() pour le deporter dans son propre module
     private databaseConnect(): void {
         database.connect();
     }

@@ -1,11 +1,25 @@
 import * as redis from "redis";
 import RedisStore from "connect-redis";
 require('dotenv').config();
+
+type clientOptions = {
+    socket: {
+        host: string,
+        port: number
+    }
+}
+
+interface IRedisInstance {
+    getInstance(): RedisStore;
+    connect(): void;
+}
+
 class RedisInstance {
+
      private readonly instance;
-     private readonly clientOptions = {
+     private readonly clientOptions: clientOptions = {
             socket: {
-                host: process.env.REDIS_HOST,
+                host: process.env.REDIS_HOST as string,
                 port: Number(process.env.REDIS_PORT)
             }
      }
@@ -14,7 +28,7 @@ class RedisInstance {
           this.connect()
      }
 
-     public connect() {
+     private connect(): void {
 
          this.instance.connect()
              .catch(function(err) {
@@ -29,10 +43,10 @@ class RedisInstance {
 
      }
 
-    public getInstance() {
+    public getInstance(): RedisStore {
         return this.instance;
     }
 
 }
 
-export const redisInstance = new RedisStore({ client: new RedisInstance().getInstance() });
+export const redisInstance: RedisStore = new RedisStore({ client: new RedisInstance().getInstance() });

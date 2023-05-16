@@ -17,8 +17,8 @@ export class HttpsServer {
 
     public start() {
         const options = {
-            key: fs.readFileSync(process.env.SSL_KEY_PATH),
-            cert: fs.readFileSync(process.env.SSL_CERT_PATH)
+            key: fs.readFileSync(process.env.SSL_KEY_PATH as string),
+            cert: fs.readFileSync(process.env.SSL_CERT_PATH as string)
         };
 
         this.server = https.createServer(options, this.app).listen(this.port, () => {
