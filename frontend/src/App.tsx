@@ -1,17 +1,10 @@
 import React from "react";
 import axios from "axios";
-
-interface IUser {
-    username: string;
-    email: string;
-    password: string;
-}
-
 function App() {
 
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        axios.get('https://localhost:3000/users/1')
+        axios.get('https//localhost:3000/signin')
             .then(response => {
                 console.log(response);
             })

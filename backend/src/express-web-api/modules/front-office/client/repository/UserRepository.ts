@@ -1,6 +1,6 @@
-import { database } from '../../../config/database';
+import { database } from '../../../../config-storage/database/database';
 import { User } from '../index';
-import { DatabaseException } from "../../Exception/DatabaseException";
+import { DatabaseException } from "../../../../../utils/exceptions/DatabaseException";
 
 export class UserRepository {
     public async findById(userId: string): Promise<User | null> {

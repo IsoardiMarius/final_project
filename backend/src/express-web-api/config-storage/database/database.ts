@@ -1,9 +1,9 @@
 const mysql = require('mysql2');
 
+// si NODE_ENV est à 'test', on utilise la base de données de test
 if (process.env.NODE_ENV === 'development') require('dotenv').config({ path: process.cwd() + '/.env' });
 if (process.env.NODE_ENV === 'test') require('dotenv').config({ path: process.cwd() + '/.env.test' });
 
-// Define the database connection configuration
 class DatabaseConfig {
     host: string;
     user: string;
@@ -51,7 +51,6 @@ class DatabaseConnection {
 
 // Create a new database connection
 export const database = new DatabaseConnection(new DatabaseConfig(
-    // si NODE_ENV est à 'test', on utilise la base de données de test
     process.env.DB_HOST,
     process.env.DB_USER,
     process.env.DB_DATABASE,

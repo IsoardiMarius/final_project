@@ -4,9 +4,9 @@
   "license": "ISC",
   "version": "1.0.0",
   "description": "Graphql dynamic schema generating and middleware usage",
-  "main": "server.ts",
+  "main": "https-server/server.ts",
   "scripts": {
-    "start": "NODE_ENV=development ../backend/node_modules/.bin/nodemon src/server.ts",
+    "start": "NODE_ENV=development ../backend/node_modules/.bin/nodemon src/https-server/server.ts",
     "lint": "../node_modules/.bin/eslint . --ext .ts",
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --forceExit"
   },
@@ -26,6 +26,7 @@
     "express-session": "^1.17.3",
     "faker": "^6.6.6",
     "glob": "^7.1.6",
+    "helmet": "^7.0.0",
     "http-errors": "^2.0.0",
     "https": "^1.0.0",
     "jest-cli": "^29.5.0",
@@ -55,6 +56,7 @@
     "eslint": "^8.34.0",
     "jest": "^29.5.0",
     "nodemon": "^2.0.2",
+    "passport-session": "^1.0.2",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^8.6.2",

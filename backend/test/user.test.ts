@@ -1,7 +1,7 @@
-import { app } from '../src/app';
-import { HttpsServer } from '../src/server';
-import { database } from "../src/config/database";
-import { User } from "../src/modules/User";
+import { app } from '../src/express-web-api/app';
+import { HttpsServer } from '../src/https-server/server';
+import { database } from "../src/express-web-api/config-storage/database/database";
+import { User } from "../src/express-web-api/modules/front-office/client";
 let server: HttpsServer;
 
 
@@ -23,16 +23,6 @@ describe('GET /users/:id', () => {
     const axios = require('axios');
 
     it('should return user', async () => {
-
-        const user = {
-            id: 1,
-            firstname: "marius",
-            lastname: "isoardi",
-            email: "marisu@mail.com",
-            password: "marius"
-        }
-
-
 
         const response = await axios.get('https://localhost:3000/users/1');
 
