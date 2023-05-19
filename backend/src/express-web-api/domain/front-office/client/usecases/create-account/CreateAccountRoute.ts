@@ -4,21 +4,21 @@ import {passportLocalAuthMiddleware} from "../../../../../middlewares/PassportLo
 
 
 
-export class UserRoute {
+export class ClientRoute {
     public router = express.Router();
-    private userController = new CreateAccountController(new CreateAccountService(new CreateAccountRepository()));
+    private controller = new CreateAccountController(new CreateAccountService(new CreateAccountRepository()));
 
     constructor() {
         this.initializeRoutes();
     }
 
     private initializeRoutes() {
-        this.router.get('/:userId', passportLocalAuthMiddleware, async (req: express.Request, res: express.Response) => {
+        this.router.get('/:clientId', passportLocalAuthMiddleware, async (req: express.Request, res: express.Response) => {
             try {
 
-                const { userId } = req.params;
-                const user = await this.userController.getUserById(userId);
-                res.status(200).json(user);
+                const { clientId } = req.params;
+                const client = await this.controller.getClientById(clientId);
+                res.status(200).json(client);
 
             } catch (error) {
 
@@ -36,5 +36,3 @@ export class UserRoute {
         });
     }
 }
-
-export const userRoute = new UserRoute().router;

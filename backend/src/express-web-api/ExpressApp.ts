@@ -1,5 +1,3 @@
-
-
 require('dotenv').config();
 
 import express from "express";
@@ -15,8 +13,8 @@ import { passportLocalAuthMiddleware } from "./middlewares/PassportLocalMiddlewa
 import { redisInstance } from "./config-storage/redis/RedisInstance";
 // import { databaseInstance } from "./config-storage/databaseConnection/databaseConnection";
 
-import {userRoute, UserRoute} from "./domain/front-office/client/usecases/create-account";
 import { EmailConnectionRoute } from "./domain/front-office/client/usecases/connection/email-connection/EmailConnectionRoute";
+import { ClientRoute } from "./domain/front-office/client/usecases/create-account";
 
 //TODO: Clean package npm
 class ExpressApp {
@@ -78,24 +76,24 @@ class ExpressApp {
         this.app.use(passport.authenticate('session'));
     }
 
-    //TODO: Faire en sorte de
+    //TODO: Faire en sorte d'exporter les route pour rendre modulable
     private setupRoutes(): void {
 
-        const userRoute = new UserRoute().router;
+        const clientRoute = new ClientRoute().router;
 
         const emailConnectionRoute = new EmailConnectionRoute().router;
 
 
         this.app.use('/signin', emailConnectionRoute);
 
-        this.app.use('/users', userRoute );
+        this.app.use('/users', clientRoute );
 
         this.app.get('/info', passportLocalAuthMiddleware, (req: any, res) => {
             const id = req.session.passport.user;
-            console.log(req.session.passport.user)
             res.send(`La valeur de maInfo est ${id}`);
         });
-        }
+
+    }
 
 }
 

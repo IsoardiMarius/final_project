@@ -1,21 +1,21 @@
 import { sequelize } from "../../../../../config-storage/sequelize/models"
 import {DataTypes} from "sequelize";
 
-const Users = require('../../../../../config-storage/sequelize/models/user')(sequelize, DataTypes)
-import { User } from './index';
+const Clients = require('../../../../../config-storage/sequelize/models/client')(sequelize, DataTypes)
+import { Client } from './index';
 import { DatabaseException } from "../../../../../../utils/exceptions/DatabaseException";
 
 
 export class CreateAccountRepository {
-    public async findById(userId: string): Promise<User | null> {
+    public async findById(clientId: string): Promise<Client | null> {
 
         try {
-            const user = await Users.findByPk(userId);
-            return user;
+            const client = await Clients.findByPk(clientId);
+            return client;
         }
 
         catch (error) {
-            throw new DatabaseException('Error while searching for the user in the databaseConnection');
+            throw new DatabaseException('Error while searching for the client in the databaseConnection');
         }
     }
 }

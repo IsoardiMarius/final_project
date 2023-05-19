@@ -1,7 +1,7 @@
 import { expressApp } from '../src/express-web-api/ExpressApp';
 import { HttpsServer } from '../src/https-server/server';
-import { databaseConnection } from "../src/express-web-api/config-storage/database/DatabaseInstance";
-import { User } from "../src/express-web-api/domain/front-office/client/usecases/create-account";
+// import { databaseConnection } from "../src/express-web-api/config-storage/database/DatabaseInstance";
+import { Client } from "../src/express-web-api/domain/front-office/client/ClientModel";
 let server: HttpsServer;
 
 
@@ -15,7 +15,7 @@ beforeAll( () => {
 });
 
 afterAll(async () => {
-    databaseConnection.close();
+    // databaseConnection.close();
     await server.stop();
 });
 
@@ -26,9 +26,9 @@ describe('GET /users/:id', () => {
 
         const response = await axios.get('https://localhost:3000/users/1');
 
-        const newUser = new User(response.data.id, response.data.firstname, response.data.lastname, response.data.email, response.data.password);
+        const newUser = new Client(response.data.id, response.data.firstname, response.data.lastname, response.data.email, response.data.password);
 
         expect(response.status).toBe(200);
-        expect(newUser).toBeInstanceOf(User);
+        expect(newUser).toBeInstanceOf(Client);
     });
 });
