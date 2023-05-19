@@ -1,9 +1,9 @@
-import {User, UserService, UserNotFoundException} from '../index';
+import {User, CreateAccountService, UserNotFoundException} from './index';
 
-export class UserController {
-    private readonly userService: UserService;
+export class CreateAccountController {
+    private readonly userService: CreateAccountService;
 
-    constructor(userService: UserService) {
+    constructor(userService: CreateAccountService) {
         this.userService = userService;
         this.getUserById = this.getUserById.bind(this);
     }

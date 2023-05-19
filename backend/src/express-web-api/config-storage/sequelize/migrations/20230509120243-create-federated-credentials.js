@@ -2,17 +2,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Posts', {
+    await queryInterface.createTable('federated_credentials', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      user_id: {
         type: Sequelize.STRING
       },
-      content: {
+      provider: {
+        type: Sequelize.TEXT
+      },
+      subject: {
         type: Sequelize.TEXT
       },
       createdAt: {
@@ -25,7 +28,7 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Posts');
+  async down(queryInterface) {
+    await queryInterface.dropTable('federated_credentials');
   }
 };

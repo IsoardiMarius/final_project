@@ -1,12 +1,13 @@
 import { Application } from 'express';
 import * as https from "https";
 import * as fs from "fs";
-import {app} from "./app";
+import { expressApp } from "../express-web-api/ExpressApp";
 
 export class HttpsServer {
+
     private app: Application;
     private readonly port: number;
-    private server: https.Server | null;
+    private server: https.Server | null
 
     constructor(app: Application, port: number) {
         this.app = app;
@@ -16,8 +17,8 @@ export class HttpsServer {
 
     public start() {
         const options = {
-            key: fs.readFileSync('./config/key.pem'),
-            cert: fs.readFileSync('./config/cert.pem')
+            key: fs.readFileSync(process.env.SSL_KEY_PATH as string),
+            cert: fs.readFileSync(process.env.SSL_CERT_PATH as string)
         };
 
         this.server = https.createServer(options, this.app).listen(this.port, () => {
@@ -44,6 +45,7 @@ export class HttpsServer {
         });
     }
 }
-export const server = new HttpsServer(app, 3000);
+
+const server = new HttpsServer(expressApp, 3000);
 // comment this line to run the tests
-// server.start();
+server.start();
