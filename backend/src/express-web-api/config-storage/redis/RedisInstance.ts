@@ -1,13 +1,8 @@
+require('dotenv').config();
 import * as redis from "redis";
 import RedisStore from "connect-redis";
-require('dotenv').config();
 
-type clientOptions = {
-    socket: {
-        host: string,
-        port: number
-    }
-}
+
 
 interface IRedisInstance {
     getInstance(): RedisStore;
@@ -17,7 +12,7 @@ interface IRedisInstance {
 class RedisInstance {
 
      private readonly instance;
-     private readonly clientOptions: clientOptions = {
+     private readonly clientOptions = {
             socket: {
                 host: process.env.REDIS_HOST as string,
                 port: Number(process.env.REDIS_PORT)

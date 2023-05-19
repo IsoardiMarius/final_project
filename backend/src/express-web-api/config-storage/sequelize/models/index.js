@@ -4,7 +4,9 @@ const basename = path.basename(__filename);
 const config = require(__dirname + '/../config/config.js');
 const db = {};
 const { Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
+//TODO: Implémenter typescript-sequelize pour avoir une meilleure autocomplétion et une meilleure gestion des erreurs de types
 
 let sequelize;
 
@@ -13,7 +15,7 @@ sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
 })
 .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to the databaseConnection:', err);
 });
 
 
@@ -29,7 +31,7 @@ fs
     );
   })
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    const model = require(path.join(__dirname, file))(sequelize, DataTypes);
     db[model.name] = model;
   });
 

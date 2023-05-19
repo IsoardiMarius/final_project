@@ -1,19 +1,25 @@
+
+
 require('dotenv').config();
-import { Application, Request, Response, NextFunction } from 'express';
+
 import express from "express";
+import { Application, Request, Response, NextFunction } from 'express';
 import cookieParser = require("cookie-parser");
 import bodyParser = require("body-parser");
 import cors from "cors";
 const session = require('express-session');
 const passport = require('passport');
 
-const { passportConfig } = require("./passportjs-authentication/passport-local-strategy");
-import { database } from "./config-storage/database/database";
+import { passportLocalStrategy } from "./passportjs-authentication/PassportLocalStrategy";
+import { passportLocalAuthMiddleware } from "./middlewares/PassportLocalMiddleware";
 import { redisInstance } from "./config-storage/redis/RedisInstance";
+// import { databaseInstance } from "./config-storage/databaseConnection/databaseConnection";
 
-import { UserRoute } from "./modules/front-office/client";
+import {userRoute, UserRoute} from "./domain/front-office/client/usecases/create-account";
+import { EmailConnectionRoute } from "./domain/front-office/client/usecases/connection/email-connection/EmailConnectionRoute";
 
-class App {
+//TODO: Clean package npm
+class ExpressApp {
     public app: Application;
 
     private readonly sessionOptions = {
@@ -25,25 +31,31 @@ class App {
 
     constructor() {
         this.app = express();
-        //TODO: renommer les fonctions pour plus de clarté
-        this.config();
-        this.session();
-        this.routes();
-        this.databaseConnect();
+        this.configureBasicMiddlewares();
+        this.setSecurityHeaders();
+        // databaseConnection.connect();
+        this.initializeSession();
+        this.setupRoutes();
     }
 
-    private config(): void {
+    private configureBasicMiddlewares(): void {
 
         // Ici les données envoyées par le client sont parsées pour pouvoir être utilisées avec req.body
         this.app.use(bodyParser.json({limit: '501mb'}));
+
         // Ici les cookies sont parsés pour pouvoir être utilisés avec req.cookies
         this.app.use(cookieParser(process.env.SESSION_SECRET));
 
-
         // Autoriser les requêtes cross-origin (CORS) pour pouvoir utiliser l'API depuis un autre domaine
         this.app.use(cors());
+
+    }
+
+    private setSecurityHeaders(): void {
+
         // Ajouter les headers de sécurité
         this.app.use((req: Request, res: Response, next: NextFunction) => {
+
             // Empêche le clickjacking en utilisant le header X-Frame-Options
             res.setHeader('X-Frame-Options', 'SAMEORIGIN');
 
@@ -58,44 +70,33 @@ class App {
 
             next();
         });
-
     }
 
-    private session(): void {
-        passportConfig();
+    private initializeSession(): void {
+        passportLocalStrategy.initialize();
         this.app.use(session(this.sessionOptions));
         this.app.use(passport.authenticate('session'));
     }
 
+    //TODO: Faire en sorte de
+    private setupRoutes(): void {
 
-    //TODO: clean les routes
-    private routes(): void {
-            this.app.use('/users', new UserRoute().router);
-            this.app.use('/signin',   passport.authenticate('local'), (req: any, res: Response) => {
-                console.log(req.session.passport.user)
-                res.send(`Signed in with user: ${req.session.passport.user}`);
-            });
+        const userRoute = new UserRoute().router;
 
-        const requireAuth = (req: any, res: Response, next: NextFunction) => {
-            if (req.isAuthenticated()) {
-                return next();
-            } else {
-                return res.status(401).send("UnauthorizedDx");
-            }
-        };
+        const emailConnectionRoute = new EmailConnectionRoute().router;
 
-        this.app.get('/info', requireAuth, (req: any, res) => {
+
+        this.app.use('/signin', emailConnectionRoute);
+
+        this.app.use('/users', userRoute );
+
+        this.app.get('/info', passportLocalAuthMiddleware, (req: any, res) => {
             const id = req.session.passport.user;
             console.log(req.session.passport.user)
             res.send(`La valeur de maInfo est ${id}`);
         });
         }
 
-        //TODO: lever le databaseConnect() pour le deporter dans son propre module
-    private databaseConnect(): void {
-        database.connect();
-    }
-
 }
 
-export const app = new App().app;
+export const expressApp = new ExpressApp().app;

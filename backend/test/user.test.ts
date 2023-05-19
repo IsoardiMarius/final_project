@@ -1,7 +1,7 @@
-import { app } from '../src/express-web-api/app';
+import { expressApp } from '../src/express-web-api/ExpressApp';
 import { HttpsServer } from '../src/https-server/server';
-import { database } from "../src/express-web-api/config-storage/database/database";
-import { User } from "../src/express-web-api/modules/front-office/client";
+import { databaseConnection } from "../src/express-web-api/config-storage/database/DatabaseInstance";
+import { User } from "../src/express-web-api/domain/front-office/client/usecases/create-account";
 let server: HttpsServer;
 
 
@@ -10,12 +10,12 @@ beforeAll( () => {
     if (process.env.NODE_ENV !== 'test') {
         throw new Error('Unauthorized environment for testing -> NODE_ENV must be "test"');
     }
-    server = new HttpsServer(app, 3000);
+    server = new HttpsServer(expressApp, 3000);
     server.start();
 });
 
 afterAll(async () => {
-    database.close();
+    databaseConnection.close();
     await server.stop();
 });
 

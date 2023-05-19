@@ -1,23 +1,21 @@
-const mysql = require('mysql2');
-
-// si NODE_ENV est à 'test', on utilise la base de données de test
+// Si NODE_ENV est à 'test', on utilise le fichier .env.test
 if (process.env.NODE_ENV === 'development') require('dotenv').config({ path: process.cwd() + '/.env' });
 if (process.env.NODE_ENV === 'test') require('dotenv').config({ path: process.cwd() + '/.env.test' });
 
-class DatabaseConfig {
-    host: string;
-    user: string;
-    database: string;
-    password: string;
+const mysql = require('mysql2');
 
-    constructor(host: string, user: string, database: string) {
-        this.host = host;
-        this.user = user;
-        this.database = database;
-    }
+import { DatabaseConfig } from "./DatabaseConfig";
+
+
+
+interface IDatabaseConnection {
+    connect(): void;
+    query(sql: string, values?): Promise<any>;
+    close(): void;
+
 }
 
-class DatabaseConnection {
+class DatabaseInstance implements IDatabaseConnection {
     private connection;
 
     constructor(private config: DatabaseConfig) { }
@@ -28,7 +26,7 @@ class DatabaseConnection {
                 console.log('Error connecting to Db: ' + err);
                 return;
             }
-            else console.log("Environnement : " + process.env.NODE_ENV + " -->" + ' Connection established to the database ' + this.config.database + ' on ' + this.config.host + ' as ' + this.config.user + '.');
+            else console.log("Environnement : " + process.env.NODE_ENV + " -->" + ' Connection established to the databaseConnection ' + this.config.database + ' on ' + this.config.host + ' as ' + this.config.user + '.');
         });
     }
 
@@ -49,8 +47,8 @@ class DatabaseConnection {
     }
 }
 
-// Create a new database connection
-export const database = new DatabaseConnection(new DatabaseConfig(
+// Create a new databaseConnection connection
+export const databaseInstance = new DatabaseInstance(new DatabaseConfig(
     process.env.DB_HOST,
     process.env.DB_USER,
     process.env.DB_DATABASE,

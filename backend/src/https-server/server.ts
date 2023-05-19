@@ -1,7 +1,7 @@
 import { Application } from 'express';
 import * as https from "https";
 import * as fs from "fs";
-import { app } from "../express-web-api/app";
+import { expressApp } from "../express-web-api/ExpressApp";
 
 export class HttpsServer {
 
@@ -46,6 +46,6 @@ export class HttpsServer {
     }
 }
 
-const server = new HttpsServer(app, 3000);
+const server = new HttpsServer(expressApp, 3000);
 // comment this line to run the tests
 server.start();
