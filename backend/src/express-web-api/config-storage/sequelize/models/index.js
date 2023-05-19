@@ -6,13 +6,11 @@ const db = {};
 const { Sequelize } = require("sequelize");
 const { DataTypes } = require("sequelize");
 
-//TODO: Implémenter typescript-sequelize pour avoir une meilleure autocomplétion et une meilleure gestion des erreurs de types
-
 let sequelize;
 
 sequelize = new Sequelize(config.database, config.username, config.password, config);
 sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('Connecte to database ' + config.database + ' on ' + config.host + ":" + config.port);
 })
 .catch(err => {
     console.error('Unable to connect to the databaseConnection:', err);

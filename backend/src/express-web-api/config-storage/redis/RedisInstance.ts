@@ -33,7 +33,7 @@ class RedisInstance {
          });
 
          this.instance.on('connect', function() {
-             console.log('Connecté à Redis');
+             console.log('Connecté à Redis on ' + process.env.REDIS_HOST + ':' + process.env.REDIS_PORT);
          });
 
      }
