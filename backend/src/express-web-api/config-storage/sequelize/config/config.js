@@ -1,7 +1,7 @@
-
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV || 'development';
 
 switch (env) {
+
     case 'development':
         require('dotenv').config({path:__dirname+'/../../../../../.env'});
         break;
@@ -21,7 +21,8 @@ module.exports = {
             "password": null,
             "database": process.env.DB_DATABASE,
             "host": process.env.DB_HOST,
-            "dialect": process.env.DB_DIALECT
+            "dialect": process.env.DB_DIALECT,
+            "port": process.env.DB_PORT,
 }
 
 

@@ -16,7 +16,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Create User</h1>
+            <h1>Create client</h1>
             <button onClick={(e) => handleSubmit(e)} >Submit</button>
         </div>
     );

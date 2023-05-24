@@ -1,7 +1,7 @@
-export class UserNotFoundException extends Error {
-    constructor(userId: string) {
-        const message = `User with ID ${userId} not found`;
+export class ClientNotFoundException extends Error {
+    constructor(clientId: string) {
+        const message = `User with ID ${clientId} not found`;
         super(message);
-        this.name = 'UserNotFoundException';
+        this.name = 'ClientNotFoundException';
     }
 }

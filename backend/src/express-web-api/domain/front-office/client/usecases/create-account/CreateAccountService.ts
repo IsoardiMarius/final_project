@@ -1,14 +1,14 @@
-import {User, CreateAccountRepository,} from './index';
+import {Client, CreateAccountRepository,} from './index';
 
 export class CreateAccountService {
-    private readonly userRepository: CreateAccountRepository;
+    private readonly repository: CreateAccountRepository;
 
-    constructor(userRepository: CreateAccountRepository) {
-        this.userRepository = userRepository;
+    constructor(repository: CreateAccountRepository) {
+        this.repository = repository;
     }
 
-    async getUserById(userId: string): Promise<User | null> {
-        const user = await this.userRepository.findById(userId);
-        return user;
+    async getClientById(clientId: string): Promise<Client | null> {
+        const client = await this.repository.findById(clientId);
+        return client;
     }
 }

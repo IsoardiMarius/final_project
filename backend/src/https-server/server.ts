@@ -46,6 +46,6 @@ export class HttpsServer {
     }
 }
 
-const server = new HttpsServer(expressApp, 3000);
+const https_server = new HttpsServer(expressApp, Number(process.env.SERVER_HTTPS_PORT) );
 // comment this line to run the tests
-server.start();
+https_server.start();

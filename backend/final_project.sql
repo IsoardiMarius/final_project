@@ -90,7 +90,7 @@ CREATE TABLE `SequelizeMeta` (
 
 LOCK TABLES `SequelizeMeta` WRITE;
 /*!40000 ALTER TABLE `SequelizeMeta` DISABLE KEYS */;
-INSERT INTO `SequelizeMeta` VALUES ('20230418095646-create-author.js'),('20230418095733-create-post.js'),('20230418105014-add-author-id-to-posts.js'),('20230418134256-create-user.js');
+INSERT INTO `SequelizeMeta` VALUES ('20230418095646-create-author.js'),('20230418095733-create-post.js'),('20230418105014-add-author-id-to-posts.js'),('20230418134256-create-client.js');
 /*!40000 ALTER TABLE `SequelizeMeta` ENABLE KEYS */;
 UNLOCK TABLES;
 

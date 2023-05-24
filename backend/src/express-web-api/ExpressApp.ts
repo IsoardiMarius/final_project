@@ -1,24 +1,22 @@
-
-
 require('dotenv').config();
 
 import express from "express";
 import { Application, Request, Response, NextFunction } from 'express';
+
+// Middlewares
 import cookieParser = require("cookie-parser");
 import bodyParser = require("body-parser");
 import cors from "cors";
+import morgan from 'morgan';
+
+// Session
 const session = require('express-session');
 const passport = require('passport');
 
 import { passportLocalStrategy } from "./passportjs-authentication/PassportLocalStrategy";
-import { passportLocalAuthMiddleware } from "./middlewares/PassportLocalMiddleware";
 import { redisInstance } from "./config-storage/redis/RedisInstance";
-// import { databaseInstance } from "./config-storage/databaseConnection/databaseConnection";
+import { routerV1 } from "./RouterV1";
 
-import {userRoute, UserRoute} from "./domain/front-office/client/usecases/create-account";
-import { EmailConnectionRoute } from "./domain/front-office/client/usecases/connection/email-connection/EmailConnectionRoute";
-
-//TODO: Clean package npm
 class ExpressApp {
     public app: Application;
 
@@ -30,6 +28,7 @@ class ExpressApp {
     }
 
     constructor() {
+
         this.app = express();
         this.configureBasicMiddlewares();
         this.setSecurityHeaders();
@@ -46,8 +45,13 @@ class ExpressApp {
         // Ici les cookies sont parsés pour pouvoir être utilisés avec req.cookies
         this.app.use(cookieParser(process.env.SESSION_SECRET));
 
-        // Autoriser les requêtes cross-origin (CORS) pour pouvoir utiliser l'API depuis un autre domaine
-        this.app.use(cors());
+        // Ici les requêtes CORS sont autorisées si l'origine est le frontend en production ou si l'origine est n'importe quelle adresse en développement
+        this.app.use(cors({
+            origin: process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : '*',
+        }));
+
+        // Logger les requêtes HTTP dans la console
+        this.app.use(morgan('dev'))
 
     }
 
@@ -73,29 +77,18 @@ class ExpressApp {
     }
 
     private initializeSession(): void {
+
         passportLocalStrategy.initialize();
         this.app.use(session(this.sessionOptions));
         this.app.use(passport.authenticate('session'));
+
     }
 
-    //TODO: Faire en sorte de
     private setupRoutes(): void {
 
-        const userRoute = new UserRoute().router;
+        this.app.use('/api/v1', routerV1);
 
-        const emailConnectionRoute = new EmailConnectionRoute().router;
-
-
-        this.app.use('/signin', emailConnectionRoute);
-
-        this.app.use('/users', userRoute );
-
-        this.app.get('/info', passportLocalAuthMiddleware, (req: any, res) => {
-            const id = req.session.passport.user;
-            console.log(req.session.passport.user)
-            res.send(`La valeur de maInfo est ${id}`);
-        });
-        }
+    }
 
 }
 

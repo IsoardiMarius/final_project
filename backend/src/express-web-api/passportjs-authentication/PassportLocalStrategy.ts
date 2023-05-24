@@ -5,7 +5,7 @@ const passport = require("passport");
 //Et voir comment faire du sequelize-typescript
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config-storage/sequelize/models"
-const User = require('../config-storage/sequelize/models/user')(sequelize, DataTypes)
+const Client = require('../config-storage/sequelize/models/client')(sequelize, DataTypes)
 
 export class PassportLocalStrategy {
     private readonly passport: any;
@@ -23,7 +23,7 @@ export class PassportLocalStrategy {
 
                 async (username: string, password: string, done: any) => {
 
-                    const user = await User.findOne({ where: { username: username } })
+                    const user = await Client.findOne({ where: { username: username } })
 
                     if (!user) {
                         console.log("User not found : " + username)
@@ -46,7 +46,7 @@ export class PassportLocalStrategy {
 
         this.passport.deserializeUser(function(id: any, done: any){
 
-            const user = User.findByPk(id)
+            const user = Client.findByPk(id)
 
             return done(null, user)
         })

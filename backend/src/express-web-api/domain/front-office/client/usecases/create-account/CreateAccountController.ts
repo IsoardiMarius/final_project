@@ -1,21 +1,21 @@
-import {User, CreateAccountService, UserNotFoundException} from './index';
+import { Client, CreateAccountService, ClientNotFoundException } from './index';
 
 export class CreateAccountController {
-    private readonly userService: CreateAccountService;
+    private readonly service: CreateAccountService;
 
-    constructor(userService: CreateAccountService) {
-        this.userService = userService;
-        this.getUserById = this.getUserById.bind(this);
+    constructor(service: CreateAccountService) {
+        this.service = service;
+        this.getClientById = this.getClientById.bind(this);
     }
 
-    async getUserById(userId: string): Promise<User> {
-        const user = await this.userService.getUserById(userId);
+    async getClientById(clientId: string): Promise<Client> {
+        const client = await this.service.getClientById(clientId);
 
-        if (!user) {
-            console.error(`User with ID ${userId} not found`)
-            throw new UserNotFoundException(userId);
+        if (!client) {
+            console.error(`User with ID ${clientId} not found`)
+            throw new ClientNotFoundException(clientId);
         }
 
-        else return user;
+        else return client;
     }
 }
