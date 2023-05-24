@@ -4,7 +4,7 @@ import {passportLocalAuthMiddleware} from "../../../../../middlewares/PassportLo
 
 
 
-export class ClientRoute {
+export class CreateAccountRoute {
     public router = express.Router();
     private controller = new CreateAccountController(new CreateAccountService(new CreateAccountRepository()));
 
@@ -36,3 +36,5 @@ export class ClientRoute {
         });
     }
 }
+
+export const clientRoute = new CreateAccountRoute().router;
