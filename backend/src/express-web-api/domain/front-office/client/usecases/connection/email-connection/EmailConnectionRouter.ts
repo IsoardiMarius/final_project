@@ -17,5 +17,5 @@ export class EmailConnectionRouter {
     }
 }
 
-export const emailConnectionRouter = new EmailConnectionRouter().router;
+export const emailConnectionRoute = new EmailConnectionRouter().router;
 

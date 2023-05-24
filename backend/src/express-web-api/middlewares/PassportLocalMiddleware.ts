@@ -9,7 +9,7 @@ class PassportLocalAuthMiddleware {
         }
 
         else {
-            return res.status(401).send("UnauthorizedDx");
+            return res.status(401).send("UnauthorizeD");
         }
     }
 }

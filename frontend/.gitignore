@@ -26,5 +26,5 @@ dist-ssr
 ../backend/config/cert.pem
 ../backend/config/key.pem
 .env
-./cert.pem
-./key.pem
+config/cert.pem
+config/key.pem

@@ -3,12 +3,6 @@ import * as redis from "redis";
 import RedisStore from "connect-redis";
 
 
-
-interface IRedisInstance {
-    getInstance(): RedisStore;
-    connect(): void;
-}
-
 class RedisInstance {
 
      private readonly instance;

@@ -13,7 +13,7 @@ import morgan from 'morgan';
 const session = require('express-session');
 const passport = require('passport');
 
-import { passportLocalStrategy } from "./passportjs-authentication/PassportLocalStrategy";
+import { passportLocalStrategy } from "./passportjs-authentication-strategy/PassportLocalStrategy";
 import { redisInstance } from "./config-storage/redis/RedisInstance";
 import { routerV1 } from "./RouterV1";
 
@@ -34,7 +34,7 @@ class ExpressApp {
         this.setSecurityHeaders();
         // databaseConnection.connect();
         this.initializeSession();
-        this.setupRoutes();
+        this.setRoutes();
     }
 
     private configureBasicMiddlewares(): void {
@@ -84,7 +84,7 @@ class ExpressApp {
 
     }
 
-    private setupRoutes(): void {
+    private setRoutes(): void {
 
         this.app.use('/api/v1', routerV1);
 

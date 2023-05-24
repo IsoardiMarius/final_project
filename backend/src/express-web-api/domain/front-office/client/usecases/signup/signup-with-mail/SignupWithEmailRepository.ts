@@ -1,12 +1,12 @@
-import { sequelize } from "../../../../../config-storage/sequelize/models"
+import { sequelize } from "../../../../../../config-storage/sequelize/models"
 import {DataTypes} from "sequelize";
 
-const Clients = require('../../../../../config-storage/sequelize/models/client')(sequelize, DataTypes)
+const Clients = require('../../../../../../config-storage/sequelize/models/client')(sequelize, DataTypes)
 import { Client } from './index';
-import { DatabaseException } from "../../../../../../utils/exceptions/DatabaseException";
+import { DatabaseException } from "../../../../../../../utils/exceptions/DatabaseException";
 
 
-export class CreateAccountRepository {
+export class SignupWithEmailRepository {
     public async findById(clientId: string): Promise<Client | null> {
 
         try {
