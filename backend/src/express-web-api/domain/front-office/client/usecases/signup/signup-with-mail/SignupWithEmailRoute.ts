@@ -1,12 +1,12 @@
 import * as express from 'express';
-import { CreateAccountController, CreateAccountRepository, CreateAccountService } from './index';
-import {passportLocalAuthMiddleware} from "../../../../../middlewares/PassportLocalMiddleware";
+import { SignupWithEmailController, SignupWithEmailRepository, SignupWithEmailService } from './index';
+import {passportLocalAuthMiddleware} from "../../../../../../middlewares/PassportLocalMiddleware";
 
 
 
-export class CreateAccountRoute {
+export class SignupWithEmailRoute {
     public router = express.Router();
-    private controller = new CreateAccountController(new CreateAccountService(new CreateAccountRepository()));
+    private controller = new SignupWithEmailController(new SignupWithEmailService(new SignupWithEmailRepository()));
 
     constructor() {
         this.initializeRoutes();
@@ -37,4 +37,4 @@ export class CreateAccountRoute {
     }
 }
 
-export const clientRoute = new CreateAccountRoute().router;
+export const clientRoute = new SignupWithEmailRoute().router;
