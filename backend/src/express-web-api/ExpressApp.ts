@@ -13,9 +13,9 @@ import morgan from 'morgan';
 const session = require('express-session');
 const passport = require('passport');
 
-import { passportLocalStrategy } from "./passportjs-authentication-strategy/PassportLocalStrategy";
-import { redisInstance } from "./config-storage/redis/RedisInstance";
-import { routerV1 } from "./RouterV1";
+import { passportLocalStrategy } from "./config/passportjs/authentication-strategy/PassportLocalStrategy";
+import { redisInstance } from "./config/storage/redis/RedisInstance";
+import { router } from "./Router";
 
 class ExpressApp {
     public app: Application;
@@ -86,7 +86,7 @@ class ExpressApp {
 
     private setRoutes(): void {
 
-        this.app.use('/api/v1', routerV1);
+        this.app.use('/api/v1', router);
 
     }
 
