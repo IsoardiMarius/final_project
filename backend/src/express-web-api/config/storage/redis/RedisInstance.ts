@@ -3,6 +3,7 @@ import * as redis from "redis";
 import RedisStore from "connect-redis";
 
 
+//TODO: Voir pour passer redis en tls
 class RedisInstance {
 
      private readonly instance;

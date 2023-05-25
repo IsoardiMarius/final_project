@@ -1,19 +1,18 @@
 import * as express from 'express';
-import { SignupWithEmailController, SignupWithEmailRepository, SignupWithEmailService } from './index';
-import {passportLocalAuthMiddleware} from "../../../../../../middlewares/PassportLocalMiddleware";
+import { SignupEmailController, SignupEmailRepository, SignupEmailService } from './index';
 
 
 
-export class SignupWithEmailRoute {
+export class SignupEmailRoute {
     public router = express.Router();
-    private controller = new SignupWithEmailController(new SignupWithEmailService(new SignupWithEmailRepository()));
+    private controller = new SignupEmailController(new SignupEmailService(new SignupEmailRepository()));
 
     constructor() {
         this.initializeRoutes();
     }
 
     private initializeRoutes() {
-        this.router.get('/:clientId', passportLocalAuthMiddleware, async (req: express.Request, res: express.Response) => {
+        this.router.get('/:clientId', async (req: express.Request, res: express.Response) => {
             try {
 
                 const { clientId } = req.params;
@@ -37,4 +36,4 @@ export class SignupWithEmailRoute {
     }
 }
 
-export const clientRoute = new SignupWithEmailRoute().router;
+export const clientRoute = new SignupEmailRoute().router;

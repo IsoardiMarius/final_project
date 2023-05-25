@@ -2,10 +2,9 @@ const LocalStrategy = require("passport-local/lib").Strategy;
 const passport = require("passport");
 
 //TODO: Voir comment simplifier l'import des models
-//Et voir comment faire du sequelize-typescript
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config-storage/sequelize/models"
-const Client = require('../config-storage/sequelize/models/client')(sequelize, DataTypes)
+import { sequelize } from "../../../config/storage/sequelize/models"
+const Client = require('../config/sequelize/models/client')(sequelize, DataTypes)
 
 export class PassportLocalStrategy {
     private readonly passport: any;

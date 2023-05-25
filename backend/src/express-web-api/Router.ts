@@ -3,12 +3,12 @@ import passport from "passport";
 
 import { passportLocalAuthMiddleware } from "./middlewares/PassportLocalMiddleware";
 
-import { clientRoute } from "./domain/front-office/client/usecases/signup/signup-with-mail";
-import { emailConnectionRoute } from "./domain/front-office/client/usecases/connection/email-connection/EmailConnectionRouter";
+import { clientRoute } from "./users/client/usecases/signup/signup-mail";
+import { emailConnectionRoute } from "./users/client/usecases/connection/email-connection/EmailConnectionRouter";
 
 
 // TODO: voir comment simplifier tous cela
-export class RouterV1 {
+export class Router {
     public router: express.Router;
     constructor() {
 
@@ -27,4 +27,4 @@ export class RouterV1 {
     }
 }
 
-export const routerV1 = new RouterV1().router;
+export const router = new Router().router;
