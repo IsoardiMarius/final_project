@@ -1,4 +1,4 @@
-export * from '../../../ClientModel';
+export * from '../../../ClientType';
 export * from './SignupEmailController';
 export * from './SignupEmailService';
 export * from './SignupEmailRepository';

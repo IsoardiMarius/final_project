@@ -1,7 +1,7 @@
 // import { expressApp } from '../src/express-web-api/ExpressApp';
 // import { HttpsServer } from '../src/https-server/server';
 // // import { databaseConnection } from "../src/express-web-api/config-storage/database/DatabaseInstance";
-// import { Client } from "../src/express-web-api/domain/front-office/client/ClientModel";
+// import { ClientType } from "../src/express-web-api/domain/front-office/client/ClientModel";
 // let server: HttpsServer;
 //
 //
@@ -26,9 +26,9 @@
 //
 //         const response = await axios.get('https://localhost:3000/users/1');
 //
-//         const newUser = new Client(response.data.id, response.data.firstname, response.data.lastname, response.data.email, response.data.password);
+//         const newUser = new ClientType(response.data.id, response.data.firstname, response.data.lastname, response.data.email, response.data.password);
 //
 //         expect(response.status).toBe(200);
-//         expect(newUser).toBeInstanceOf(Client);
+//         expect(newUser).toBeInstanceOf(ClientType);
 //     });
 // });

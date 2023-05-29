@@ -1,4 +1,4 @@
-import {Client, SignupEmailRepository,} from './index';
+import {ClientType, SignupEmailRepository,} from './index';
 
 export class SignupEmailService {
     private readonly repository: SignupEmailRepository;
@@ -7,7 +7,7 @@ export class SignupEmailService {
         this.repository = repository;
     }
 
-    async getClientById(clientId: string): Promise<Client | null> {
+    async getClientById(clientId: string): Promise<ClientType | null> {
         const client = await this.repository.findById(clientId);
         return client;
     }

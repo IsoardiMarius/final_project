@@ -1,6 +1,7 @@
-import { Client, SignupEmailService, ClientNotFoundException } from './index';
+import { ClientType, SignupEmailService, ClientNotFoundException } from './index';
 
 export class SignupEmailController {
+    // TODO: Modifier le controller
     private readonly service: SignupEmailService;
 
     constructor(service: SignupEmailService) {
@@ -8,7 +9,7 @@ export class SignupEmailController {
         this.getClientById = this.getClientById.bind(this);
     }
 
-    async getClientById(clientId: string): Promise<Client> {
+    async getClientById(clientId: string): Promise<ClientType> {
         const client = await this.service.getClientById(clientId);
 
         if (!client) {
