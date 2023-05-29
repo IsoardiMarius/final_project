@@ -1,10 +1,8 @@
 const LocalStrategy = require("passport-local/lib").Strategy;
 const passport = require("passport");
 
-//TODO: Voir comment simplifier l'import des models
-import { DataTypes } from "sequelize";
-import { sequelize } from "../../../config/storage/sequelize/models"
-const Client = require('../../storage/sequelize/models/client')(sequelize, DataTypes)
+import {sequelize} from "../../../config/storage/sequelize/models"
+const ClientModel = sequelize.models.client
 
 export class PassportLocalStrategy {
     private readonly passport: any;
@@ -23,7 +21,7 @@ export class PassportLocalStrategy {
 
                 async (username: string, password: string, done: any) => {
 
-                    const user = await Client.findOne({ where: { username: username } })
+                    const user = await ClientModel.findOne({ where: { username: username } })
 
                     if (!user) {
                         console.log("User not found : " + username)
@@ -46,7 +44,7 @@ export class PassportLocalStrategy {
 
         this.passport.deserializeUser(function(id: any, done: any){
 
-            const user = Client.findByPk(id)
+            const user = ClientModel.findByPk(id)
 
             return done(null, user)
         })

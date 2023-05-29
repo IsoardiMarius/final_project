@@ -1,4 +1,5 @@
 # Requirements
+- Installer redis, certificat https, .env
 - npm
 - node
 

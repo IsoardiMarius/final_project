@@ -1,16 +1,14 @@
 import { sequelize } from "../../../../../config/storage/sequelize/models"
-import {DataTypes} from "sequelize";
+const ClientModel = sequelize.models.client
 
-const Clients = require('../../../../../config/storage/sequelize/models/client')(sequelize, DataTypes)
-import { Client } from './index';
+import { ClientType } from './index';
 import { DatabaseException } from "../../../../../../utils/exceptions/DatabaseException";
 
-
 export class SignupEmailRepository {
-    public async findById(clientId: string): Promise<Client | null> {
+    public async findById(clientId: string): Promise<ClientType | null> {
 
         try {
-            const client = await Clients.findByPk(clientId);
+            const client = await ClientModel.findByPk(clientId);
             return client;
         }
 
