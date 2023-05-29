@@ -1,6 +1,7 @@
 import { Client, SignupEmailService, ClientNotFoundException } from './index';
 
 export class SignupEmailController {
+    // TODO: Modifier le controller
     private readonly service: SignupEmailService;
 
     constructor(service: SignupEmailService) {

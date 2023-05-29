@@ -4,7 +4,7 @@ const passport = require("passport");
 //TODO: Voir comment simplifier l'import des models
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../../config/storage/sequelize/models"
-const Client = require('../config/sequelize/models/client')(sequelize, DataTypes)
+const Client = require('../../storage/sequelize/models/client')(sequelize, DataTypes)
 
 export class PassportLocalStrategy {
     private readonly passport: any;
@@ -15,6 +15,7 @@ export class PassportLocalStrategy {
         this.LocalStrategy = LocalStrategy;
     }
 
+    // Todo: modifier la stratégie
     public initialize(): void {
         this.passport.use(
             new this.LocalStrategy(
