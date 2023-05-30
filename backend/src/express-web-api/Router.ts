@@ -14,7 +14,7 @@ export class Router {
 
         this.router = express.Router();
 
-        // --------- ClientType routes ---------
+        // --------- Client routes ---------
 
         this.router.use('/client/signin', passport.authenticate('local'), emailConnectionRoute);
 

@@ -1,8 +1,13 @@
 const LocalStrategy = require("passport-local/lib").Strategy;
 const passport = require("passport");
 
-import {sequelize} from "../../../config/storage/sequelize/models"
-const ClientModel = sequelize.models.client
+import { DataTypes } from "sequelize";
+import { sequelize } from "../../../config/storage/sequelize/models"
+const ClientModel = require('../../storage/sequelize/models/client')(sequelize, DataTypes)
+
+//TODO: Voir comment simplifier l'import des models
+// si on utilise Clients et qu'on lève les lignes 4 et 5, on obtient une erreur
+const Clients = sequelize.models.clients
 
 export class PassportLocalStrategy {
     private readonly passport: any;
@@ -36,8 +41,6 @@ export class PassportLocalStrategy {
         );
 
         this.passport.serializeUser(function(user: any, done: any) {
-
-            console.log("User serialized : " + user)
 
             return done(null, user);
         })

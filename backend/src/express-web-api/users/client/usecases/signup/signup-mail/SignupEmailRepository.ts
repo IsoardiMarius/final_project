@@ -1,14 +1,16 @@
-import { sequelize } from "../../../../../config/storage/sequelize/models"
-const ClientModel = sequelize.models.client
+// Todo: si on supprime les lignes 4 et 5 du fichier PassportLocalStrategy.ts, on obtient une erreur
+const sequelize = require("@models").sequelize
+const Clients = sequelize.models.client
 
 import { ClientType } from './index';
-import { DatabaseException } from "../../../../../../utils/exceptions/DatabaseException";
+const DatabaseException = require("@exception/DatabaseException")
+
 
 export class SignupEmailRepository {
     public async findById(clientId: string): Promise<ClientType | null> {
 
         try {
-            const client = await ClientModel.findByPk(clientId);
+            const client = await Clients.findByPk(clientId);
             return client;
         }
 
