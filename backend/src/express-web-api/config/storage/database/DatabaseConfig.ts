@@ -1,4 +1,3 @@
-
 export class DatabaseConfig  {
     host: string;
     user: string;

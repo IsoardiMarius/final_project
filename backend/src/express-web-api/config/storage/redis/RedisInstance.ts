@@ -2,7 +2,6 @@ require('dotenv').config();
 import * as redis from "redis";
 import RedisStore from "connect-redis";
 
-
 //TODO: Voir pour passer redis en tls
 class RedisInstance {
 

@@ -5,11 +5,20 @@
   "version": "1.0.0",
   "description": "Graphql dynamic schema generating and middleware usage",
   "main": "https-server/server.ts",
+
   "scripts": {
     "start": "NODE_ENV=development ../backend/node_modules/.bin/nodemon src/https-server/server.ts",
     "lint": "../node_modules/.bin/eslint . --ext .ts",
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --forceExit"
   },
+
+  "_moduleAliases": {
+    "@root": "src/express-web-api",
+    "@models": "src/express-web-api/config/storage/sequelize/models",
+    "@config": "src/express-web-api/config",
+    "@exception": "src/utils/exceptions"
+  },
+
   "dependencies": {
     "connect-redis": "^7.1.0",
     "cookie-parser": "^1.4.6",
@@ -17,6 +26,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "module-alias": "^2.2.2",
     "mysql2": "^3.3.2",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
@@ -24,6 +34,7 @@
     "sequelize": "^6.31.1",
     "ts-node": "^10.9.1"
   },
+
   "devDependencies": {
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22"
