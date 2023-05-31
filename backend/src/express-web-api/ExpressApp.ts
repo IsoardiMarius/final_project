@@ -1,3 +1,4 @@
+// https://www.geeksforgeeks.org/how-to-have-path-alias-in-node-js/
 require('module-alias/register')
 require('dotenv').config();
 
@@ -18,8 +19,7 @@ import { passportLocalStrategy } from "./config/passportjs/authentication-strate
 import { redisInstance } from "./config/storage/redis/RedisInstance";
 import { router } from "./Router";
 
-// Todo: Ajouter des alias pour simplifier les chemins d'import
-// https://www.geeksforgeeks.org/how-to-have-path-alias-in-node-js/
+
 class ExpressApp {
     public app: Application;
 
