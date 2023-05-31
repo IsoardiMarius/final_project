@@ -8,6 +8,9 @@ const { DataTypes } = require("sequelize");
 
 let sequelize;
 
+// TODO: Ajouter un vrai user et password pour la base de données (voir comment faire pour chaque client) -> ansible-galaxy : variable
+// Installer sur la vm database -> sequelize-cli pour pouvoir faire les commandes sequelize
+
 sequelize = new Sequelize(config.database, config.username, config.password, config);
 sequelize.authenticate().then(() => {
     console.log('Connecte to database ' + config.database + ' on ' + config.host + ":" + config.port);

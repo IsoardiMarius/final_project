@@ -15,8 +15,8 @@ import morgan from 'morgan';
 const session = require('express-session');
 const passport = require('passport');
 
-import { passportLocalStrategy } from "./config/passportjs/authentication-strategy/PassportLocalStrategy";
-import { redisInstance } from "./config/storage/redis/RedisInstance";
+import { passportLocalStrategy } from "@config/passportjs/authentication-strategy/PassportLocalStrategy";
+import { redisInstance } from "@config/storage/redis/RedisInstance";
 import { router } from "./Router";
 
 
