@@ -14,9 +14,9 @@
 
   "_moduleAliases": {
     "@root": "src/express-web-api",
-    "@models": "src/express-web-api/config/storage/sequelize/models",
+    "@sequelize": "src/express-web-api/config/storage/sequelize",
     "@config": "src/express-web-api/config",
-    "@exception": "src/utils/exceptions"
+    "@exceptions": "src/utils/exceptions"
   },
 
   "dependencies": {

@@ -21,7 +21,7 @@ export class SignupEmailRoute {
 
             } catch (error) {
 
-                if (error.name === 'UserNotFoundException') {
+                if (error.name === 'ClientNotFoundException') {
                     console.error('An error occurred:', error)
                     res.status(404).send(error.message);
                 }

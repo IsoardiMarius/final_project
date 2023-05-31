@@ -13,7 +13,6 @@ export class SignupEmailController {
         const client = await this.service.getClientById(clientId);
 
         if (!client) {
-            console.error(`User with ID ${clientId} not found`)
             throw new ClientNotFoundException(clientId);
         }
 
