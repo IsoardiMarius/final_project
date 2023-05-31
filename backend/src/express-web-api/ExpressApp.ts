@@ -5,7 +5,7 @@ require('dotenv').config();
 import express from "express";
 import { Application, Request, Response, NextFunction } from 'express';
 
-// Middlewares
+// Middlewares basic config
 import cookieParser = require("cookie-parser");
 import bodyParser = require("body-parser");
 import cors from "cors";
