@@ -1,10 +1,9 @@
-import { ClientType, SignupEmailService, ClientNotFoundException } from './index';
+import { ClientType, EmailSignupService, ClientNotFoundException } from './index';
 
-export class SignupEmailController {
-    // TODO: Modifier le controller
-    private readonly service: SignupEmailService;
+export class EmailSignupController {
+    private readonly service: EmailSignupService;
 
-    constructor(service: SignupEmailService) {
+    constructor(service: EmailSignupService) {
         this.service = service;
         this.getClientById = this.getClientById.bind(this);
     }

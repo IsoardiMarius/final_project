@@ -3,11 +3,13 @@ import passport from "passport";
 
 import { passportLocalAuthMiddleware } from "./middlewares/PassportLocalMiddleware";
 
-import { clientRoute } from "./users/client/usecases/signup/signup-mail";
-import { emailConnectionRoute } from "./users/client/usecases/connection/email-connection/EmailConnectionRouter";
+import { clientRoute } from "./domain/client/usecases/signup/email-signup";
+import { emailConnectionRoute } from "./domain/client/usecases/connection/email-connection/EmailConnectionRouter";
+import {DataTypes} from "sequelize";
+import {sequelize} from "./config/storage/sequelize/models";
+require("@sequelize/models/client")(sequelize, DataTypes)
 
 
-// TODO: voir comment simplifier tous cela
 export class Router {
     public router: express.Router;
     constructor() {

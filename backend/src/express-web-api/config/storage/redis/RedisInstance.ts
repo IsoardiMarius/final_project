@@ -1,16 +1,21 @@
 require('dotenv').config();
+
 import * as redis from "redis";
 import RedisStore from "connect-redis";
 
-//TODO: Voir pour passer redis en tls
 class RedisInstance {
 
      private readonly instance;
      private readonly clientOptions = {
-            socket: {
-                host: process.env.REDIS_HOST as string,
-                port: Number(process.env.REDIS_PORT)
-            }
+        socket: {
+            host: process.env.REDIS_HOST as string,
+            port: Number(process.env.REDIS_PORT),
+            // tls: true,
+            // rejectUnauthorized: false,
+            // cert: 'path/to/file.crt',
+        },
+         user: process.env.REDIS_USER as string,
+         // password: process.env.REDIS_PASSWORD as string
      }
      constructor() {
           this.instance = redis.createClient(this.clientOptions);

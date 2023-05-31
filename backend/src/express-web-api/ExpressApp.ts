@@ -5,7 +5,7 @@ require('dotenv').config();
 import express from "express";
 import { Application, Request, Response, NextFunction } from 'express';
 
-// Middlewares
+// Middlewares basic config
 import cookieParser = require("cookie-parser");
 import bodyParser = require("body-parser");
 import cors from "cors";
@@ -15,8 +15,8 @@ import morgan from 'morgan';
 const session = require('express-session');
 const passport = require('passport');
 
-import { passportLocalStrategy } from "./config/passportjs/authentication-strategy/PassportLocalStrategy";
-import { redisInstance } from "./config/storage/redis/RedisInstance";
+import { passportLocalStrategy } from "@config/passportjs/authentication-strategy/PassportLocalStrategy";
+import { redisInstance } from "@config/storage/redis/RedisInstance";
 import { router } from "./Router";
 
 
