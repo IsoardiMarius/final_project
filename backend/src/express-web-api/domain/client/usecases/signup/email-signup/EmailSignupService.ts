@@ -1,9 +1,9 @@
-import {ClientType, SignupEmailRepository,} from './index';
+import {ClientType, EmailSignupRepository,} from './index';
 
-export class SignupEmailService {
-    private readonly repository: SignupEmailRepository;
+export class EmailSignupService {
+    private readonly repository: EmailSignupRepository;
 
-    constructor(repository: SignupEmailRepository) {
+    constructor(repository: EmailSignupRepository) {
         this.repository = repository;
     }
 

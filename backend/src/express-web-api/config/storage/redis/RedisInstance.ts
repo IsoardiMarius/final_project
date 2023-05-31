@@ -3,9 +3,6 @@ require('dotenv').config();
 import * as redis from "redis";
 import RedisStore from "connect-redis";
 
-//TODO: Voir pour passer redis en tls :
-//Voir comment changer le mdp de l'utilisateur redis par défaut (default). Il faut que se soit persistant
-//Ajouter l'installation de redis sur le déploiement Ansible (voir ticket Asana)
 class RedisInstance {
 
      private readonly instance;

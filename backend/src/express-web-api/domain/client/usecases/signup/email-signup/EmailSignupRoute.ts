@@ -1,17 +1,17 @@
 import * as express from 'express';
-import { SignupEmailController, SignupEmailRepository, SignupEmailService } from './index';
+import { EmailSignupController, EmailSignupRepository, EmailSignupService } from './index';
 
 
 
-export class SignupEmailRoute {
+export class EmailSignupRoute {
     public router = express.Router();
-    private controller = new SignupEmailController(new SignupEmailService(new SignupEmailRepository()));
+    private controller = new EmailSignupController(new EmailSignupService(new EmailSignupRepository()));
 
     constructor() {
         this.initializeRoutes();
     }
 
-    private initializeRoutes() {
+    private initializeRoutes(): void {
         this.router.get('/:clientId', async (req: express.Request, res: express.Response) => {
             try {
 
@@ -36,4 +36,4 @@ export class SignupEmailRoute {
     }
 }
 
-export const clientRoute = new SignupEmailRoute().router;
+export const clientRoute = new EmailSignupRoute().router;
