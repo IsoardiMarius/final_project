@@ -36,4 +36,4 @@ export class EmailSignupRoute {
     }
 }
 
-export const clientRoute = new EmailSignupRoute().router;
+export const emailSignupRoute = new EmailSignupRoute().router;

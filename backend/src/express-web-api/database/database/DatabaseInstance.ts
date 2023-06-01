@@ -6,8 +6,6 @@ const mysql = require('mysql2');
 
 import { DatabaseConfig } from "./DatabaseConfig";
 
-
-
 interface IDatabaseConnection {
     connect(): void;
     query(sql: string, values?): Promise<any>;
@@ -48,7 +46,7 @@ class DatabaseInstance implements IDatabaseConnection {
 }
 
 // Create a new databaseConnection connection
-export const databaseInstance = new DatabaseInstance(new DatabaseConfig(
+export const databaseInstance: DatabaseInstance = new DatabaseInstance(new DatabaseConfig(
     process.env.DB_HOST,
     process.env.DB_USER,
     process.env.DB_DATABASE,

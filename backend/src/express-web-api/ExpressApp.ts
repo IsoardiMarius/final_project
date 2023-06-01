@@ -1,9 +1,27 @@
-// https://www.geeksforgeeks.org/how-to-have-path-alias-in-node-js/
-require('module-alias/register')
+/*
+
+    Ce fichier configure l'application Express pour qu'elle soit prête à être utilisée par le serveur HTTPS.
+
+    On configure l'application Express avec les middlewares de base tels
+    que l'analyseur de corps JSON, l'analyseur de cookies ect ...
+
+    On ajoute des en-têtes de sécurité pour prévenir les attaques,
+    initialise les stratégies d'authentifications pour la connexion des utilisateurs et
+    configure la session des utilisateurs.
+
+    On monte également les routes principales de l'application sur l'application Express.
+
+    Ce fichier est appelé par le fichier src/https-server/server.ts à la racine du dossier src.
+
+*/
+
+// Importation des modules et configuration initiale
+require('module-alias/register');
 require('dotenv').config();
 
 import express from "express";
 import { Application, Request, Response, NextFunction } from 'express';
+const treblle = require('@treblle/express')
 
 // Middlewares basic config
 import cookieParser = require("cookie-parser");
@@ -15,84 +33,68 @@ import morgan from 'morgan';
 const session = require('express-session');
 const passport = require('passport');
 
-import { passportLocalStrategy } from "@config/passportjs/authentication-strategy/PassportLocalStrategy";
-import { redisInstance } from "@config/storage/redis/RedisInstance";
-import { router } from "./Router";
-
+import { passportLocalStrategy } from "@root/passport-auth-strategy/PassportLocalStrategy";
+import { redisInstance } from "@root/database/redis/RedisInstance";
+import { router } from "./router/Router";
 
 class ExpressApp {
     public app: Application;
 
     private readonly sessionOptions = {
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        store: redisInstance,
+        secret: process.env.SESSION_SECRET, // Clé secrète pour signer les cookies de session
+        resave: false, // Ne pas sauvegarder la session à chaque requête
+        saveUninitialized: false, // Ne pas sauvegarder les sessions non initialisées
+        store: redisInstance, // Utilisation de Redis pour le stockage de session
     }
 
     constructor() {
-
         this.app = express();
-        this.configureBasicMiddlewares();
-        this.setSecurityHeaders();
-        // databaseConnection.connect();
-        this.initializeSession();
-        this.setRoutes();
+        this.configureBasicMiddlewares(); // Configuration des middlewares de base
+        this.setSecurityHeaders(); // Configuration des headers de sécurité
+        this.initializeSession(); // Initialisation de la session
+        this.setRoutes(); // Configuration des routes
     }
 
+    // Configuration des middlewares de base
     private configureBasicMiddlewares(): void {
-
-        // Ici les données envoyées par le client sont parsées pour pouvoir être utilisées avec req.body
-        this.app.use(bodyParser.json({limit: '501mb'}));
-
-        // Ici les cookies sont parsés pour pouvoir être utilisés avec req.cookies
-        this.app.use(cookieParser(process.env.SESSION_SECRET));
-
-        // Ici les requêtes CORS sont autorisées si l'origine est le frontend en production ou si l'origine est n'importe quelle adresse en développement
+        this.app.use(bodyParser.json({limit: '501mb'})); // Rend les données JSON disponibles dans les requêtes (req.body)
+        this.app.use(cookieParser(process.env.SESSION_SECRET)); // Rend les cookies disponibles dans les requêtes (req.cookies)
         this.app.use(cors({
-            origin: process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : '*',
+            origin: process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : '*', // Configuration CORS
         }));
-
-        // Logger les requêtes HTTP dans la console
-        this.app.use(morgan('dev'))
-
+        this.app.use(morgan('dev')); // Journalisation des requêtes HTTP (on voit les requêtes dans la console)
+        this.app.use( // Trebble sert à monitorer, documenter et debugger notre APIs.
+            treblle({
+                apiKey: process.env.TREBLLE_API_KEY,
+                projectId: process.env.TREBLLE_PROJECT_ID,
+                additionalFieldsToMask: [],
+            })
+        )
     }
 
+    // Configuration des headers de sécurité
     private setSecurityHeaders(): void {
-
-        // Ajouter les headers de sécurité
         this.app.use((req: Request, res: Response, next: NextFunction) => {
-
-            // Empêche le clickjacking en utilisant le header X-Frame-Options
-            res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-
-            // Empêche le sniffing MIME en utilisant le header X-Content-Type-Options
-            res.setHeader('X-Content-Type-Options', 'nosniff');
-
-            // Active la protection XSS en utilisant le header X-XSS-Protection
-            res.setHeader('X-XSS-Protection', '1; mode=block');
-
-            // Empêche les attaques CSRF en utilisant le header CSRF-TOKEN
-            res.setHeader('CSRF-TOKEN', 'randomly_generated_token');
-
+            res.setHeader('X-Frame-Options', 'SAMEORIGIN'); // Empêche le clickjacking
+            res.setHeader('X-Content-Type-Options', 'nosniff'); // Empêche le sniffing MIME
+            res.setHeader('X-XSS-Protection', '1; mode=block'); // Active la protection XSS
+            res.setHeader('CSRF-TOKEN', 'randomly_generated_token'); // Protection CSRF
             next();
         });
     }
 
+    // Initialisation de la session
     private initializeSession(): void {
-
-        passportLocalStrategy.initialize();
-        this.app.use(session(this.sessionOptions));
-        this.app.use(passport.authenticate('session'));
-
+        passportLocalStrategy.initialize(); // Initialisation de la stratégie d'authentification locale avec Passport.js
+        this.app.use(session(this.sessionOptions)); // Configuration du middleware de session
+        this.app.use(passport.authenticate('session')); // Authentification des utilisateurs pendant la session
     }
 
+    // Configuration des routes
     private setRoutes(): void {
-
-        this.app.use('/api/v1', router);
-
+        this.app.use('/api', router); // Montage des routes principales sur l'application
     }
-
 }
 
-export const expressApp = new ExpressApp().app;
+// Exportation de l'application Express pour le serveur HTTPS
+export const expressApp: Application = new ExpressApp().app;

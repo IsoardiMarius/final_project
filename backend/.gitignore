@@ -11,3 +11,6 @@ cert.pem
 key.pem
 .env
 .env.test
+/src/express-web-api/database/redis/certifications/redis.pem
+/dist/
+/test/user.test.js

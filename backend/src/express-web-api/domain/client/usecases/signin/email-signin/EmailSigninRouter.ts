@@ -1,13 +1,13 @@
 import * as express from 'express';
 
-export class EmailConnectionRouter {
+export class EmailSigninRoute {
     public router = express.Router();
 
     constructor() {
         this.initializeRoutes();
     }
 
-    private initializeRoutes() {
+    private initializeRoutes(): void {
         this.router.post('/', async (req: any, res: express.Response) => {
 
                 console.log(req.session.passport.user)
@@ -17,5 +17,5 @@ export class EmailConnectionRouter {
     }
 }
 
-export const emailConnectionRoute = new EmailConnectionRouter().router;
+export const emailSigninRoute = new EmailSigninRoute().router;
 

@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "@config/storage/sequelize/models"
-const Clients = require('@config/storage/sequelize/models/client')(sequelize, DataTypes)
+import { sequelize } from "@root/database/sequelize/models"
+const Clients = require('@root/database/sequelize/models/client')(sequelize, DataTypes)
 
 import { ClientType } from './index';
 import { DatabaseException } from "@exceptions/DatabaseException";

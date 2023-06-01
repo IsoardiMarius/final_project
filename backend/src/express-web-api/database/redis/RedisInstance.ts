@@ -2,6 +2,7 @@ require('dotenv').config();
 
 import * as redis from "redis";
 import RedisStore from "connect-redis";
+import fs from "fs";
 
 class RedisInstance {
 
@@ -10,9 +11,12 @@ class RedisInstance {
         socket: {
             host: process.env.REDIS_HOST as string,
             port: Number(process.env.REDIS_PORT),
-            // tls: true,
-            // rejectUnauthorized: false,
-            // cert: 'path/to/file.crt',
+            tls: true,
+            //Todo:T04 -> quand on commente la ligne suivante, on a une erreur de certificat
+            rejectUnauthorized: false,
+            cert: fs.readFileSync(process.env.REDIS_CERT_PATH as string),
+            key: fs.readFileSync(process.env.REDIS_KEY_PATH as string),
+            ca: fs.readFileSync(process.env.REDIS_CA_PATH as string)
         },
          user: process.env.REDIS_USER as string,
          // password: process.env.REDIS_PASSWORD as string

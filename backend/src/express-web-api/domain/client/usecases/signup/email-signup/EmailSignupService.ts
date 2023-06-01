@@ -8,7 +8,6 @@ export class EmailSignupService {
     }
 
     async getClientById(clientId: string): Promise<ClientType | null> {
-        const client = await this.repository.findById(clientId);
-        return client;
+        return await this.repository.findById(clientId);
     }
 }

@@ -11,7 +11,7 @@
       "@config/*": ["src/express-web-api/config/*"],
       "@utils/*": ["src/utils/*"],
       "@sequelize/*": ["src/express-web-api/config/storage/sequelize/*"],
-      "@exceptions/*": ["src/utils/exceptions/*"]
+      "@exceptions/*": ["src/express-web-api/utils/exceptions/*"]
     }
   },
 
